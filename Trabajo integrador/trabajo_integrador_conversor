@@ -1,0 +1,44 @@
+from tkinter import messagebox, Label, Tk, StringVar, CENTER, ttk
+
+def calcular():
+    peso = input_peso.get()
+    # Validación de número
+    if not peso.isdigit():
+        messagebox.showerror("Error", "Debe ingresar un número entero.")
+        return
+    peso=float(peso)
+    if peso<=0: 
+        messagebox.showerror("Error", "Debe ingresar un peso positivo.")
+        return
+    # Obtener sexo desde el combo
+    sexo = combo_sexo.get()
+    if sexo == "Hombre":
+        proteina = peso * 2.2
+    elif sexo == "Mujer":
+        proteina = peso * 2.0
+    else:
+        messagebox.showerror("Error", "Debe elegir un sexo")
+        return
+    resultado.set(f"{proteina} g")
+
+#Titulo de la ventana:
+root = Tk()
+root.title("Cálculo de Proteínas diarias")
+#Titulo de la sección peso:
+Label(root, text="Peso (en Kg):").grid(row=0, column=0)
+#meter el peso en la variable
+input_peso = StringVar()
+ttk.Entry(root, textvariable=input_peso).grid(row=0, column=1)
+#Titulo de la seccion sexo:
+Label(root, text="Sexo:").grid(row=1, column=0)
+#opciones para elegir
+combo_sexo = ttk.Combobox(root, values=["Hombre", "Mujer"], state="readonly")
+combo_sexo.grid(row=1, column=1)
+#Titulo del boton "Calcular y aplicacion de la funcion"
+ttk.Button(root, text="Calcular", command=calcular).grid(row=2, columnspan=2)
+#Resultado
+resultado = StringVar()
+#Mostrar el resultado de la cuenta
+Label(root, textvariable=resultado).grid(row=3, columnspan=2)
+#Terminar
+root.mainloop()
